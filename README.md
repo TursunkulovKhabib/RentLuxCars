@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# RentLuxCars — Premium Car Rental Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**RentLuxCars** — это современное веб-приложение (SPA) для аренды автомобилей премиум-класса. Проект разработан с использованием передовых технологий фронтенда 2025 года и облачной базы данных Supabase. Платформа позволяет пользователям бронировать элитные автомобили, а владельцам — сдавать свои авто в аренду через удобный интерфейс.
 
-## Available Scripts
+![Project Preview](public/images/slider/slide-1.jpg)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Особенности и Фишки
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*   **Адаптивный дизайн**: Полная поддержка мобильных устройств, планшетов и десктопов.
+*   **Интерактивный UI**: Эффектный 3D-слайдер с параллаксом, плавные анимации переходов и наведения.
+*   **Умный каталог**: Динамическая фильтрация автомобилей по категориям (Sport, Executive, Family) без перезагрузки страницы.
+*   **BFF (Backend for Frontend)**: Использование Supabase как сервиса для базы данных и авторизации.
+*   **Админ-панель**: Защищенный личный кабинет менеджера для управления заявками.
+*   **AI-Feature**: Интегрированная форма создания объявления с возможностью (имитации) генерации описания автомобиля через Искусственный Интеллект.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## Технологический стек
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Frontend
+*   **React 18**: Основная библиотека интерфейса.
+*   **TypeScript**: Строгая типизация для надежности и масштабируемости кода.
+*   **Redux Toolkit**: Глобальное управление состоянием (список авто, статус загрузки, авторизация пользователя).
+*   **React Router v7**: Современная клиентская маршрутизация.
+*   **Tailwind CSS**: Утилитарная стилизация для быстрой и гибкой верстки.
+*   **Lucide React**: Набор легких и красивых иконки.
 
-### `npm run build`
+### Backend & Infrastructure
+*   **Supabase**:
+    *   **PostgreSQL**: Надежная реляционная база данных.
+    *   **Auth**: Готовая система аутентификации (Email/Password).
+    *   **API**: Автоматически генерируемый RESTful API.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Инструкция по установке и запуску
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Для запуска проекта вам понадобится установленный **Node.js** (версии 16 или выше) и **npm**.
 
-### `npm run eject`
+### 1. Клонирование репозитория
+Откройте терминал (PowerShell, CMD или Terminal на macOS/Linux) и выполните команду:
+  `git clone https://github.com/TursunkulovKhabib/RentLuxCars.git`
+### 2. Установка зависимостей
+Установите все необходимые библиотеки одной командой:
+  `npm install`
+### 3. Запуск проекта
+Запустите локальный сервер разработки:
+  `npm start`
+После этого откройте браузер и перейдите по адресу [http://localhost:3000](http://localhost:3000).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Структура проекта
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+*   **`src/api`** — Конфигурация клиента Supabase и методы API.
+*   **`src/components`** — Переиспользуемые UI компоненты (Button, Input, Slider).
+*   **`src/features`** — Redux Slices (логика данных и авторизации).
+*   **`src/pages`** — Основные страницы (Home, Catalog, CarDetails, Admin, CreateAd).
+*   **`src/store`** — Настройка Redux Store.
+*   **`src/types`** — Глобальные TypeScript интерфейсы.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Проект разработан в рамках итоговой аттестации.
+**RentLuxCars by Tursunkulov** 
