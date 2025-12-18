@@ -17,7 +17,14 @@ module.exports = {
                 }
             },
             fontFamily: {
-                sans: ['Montserrat', 'sans-serif'], // Основной шрифт (надо будет подключить)
+                // Основной шрифт
+                sans: ['Montserrat', 'sans-serif'],
+
+                // Для категории Executive
+                garamond: ['"EB Garamond"', 'serif'],
+
+                // Для категории Sports
+                island: ['"Island Moments"', 'cursive'],
             }
         },
     },
