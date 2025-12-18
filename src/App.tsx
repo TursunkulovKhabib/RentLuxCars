@@ -14,6 +14,7 @@ import { Contacts } from './pages/Contacts';
 import { Register } from './pages/Register';
 import { Admin } from './pages/Admin';
 import { ScrollToTop } from './components/utils/ScrollToTop';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -54,8 +55,24 @@ function App() {
                     <Route path="catalog" element={<Catalog />} />
                     <Route path="catalog/:id" element={<CarDetails />} />
                     <Route path="contacts" element={<Contacts />} />
-                    <Route path="create-ad" element={<CreateAd />} />
-                    <Route path="admin" element={<Admin />} />
+                    {/* ЗАЩИЩЕННЫЕ МАРШРУТЫ */}
+                    <Route
+                        path="create-ad"
+                        element={
+                            <ProtectedRoute>
+                                <CreateAd />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="admin"
+                        element={
+                            <ProtectedRoute>
+                                <Admin />
+                            </ProtectedRoute>
+                        }
+                    />
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
