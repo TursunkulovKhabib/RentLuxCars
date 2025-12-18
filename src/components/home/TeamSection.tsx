@@ -4,45 +4,58 @@ const TEAM = [
     {
         id: 1,
         name: 'Дмитрий',
-        role: 'Senior Sales Manager',
+        role: 'Менеджер-консультант',
+        phone: '+7 990 506 20 07',
         image: '/images/team/dmitry.jpg',
     },
     {
         id: 2,
         name: 'Магомед-Башир',
-        role: 'Head of Luxury Rentals',
+        role: 'Директор фирмы',
+        phone: '+7 993 105 20 07',
         image: '/images/team/magomed.jpg',
     },
     {
         id: 3,
         name: 'Матвей',
-        role: 'Customer Success Lead',
+        role: 'Механик-консультант',
+        phone: '+7 992 408 20 07',
         image: '/images/team/matvey.jpg',
     },
 ];
 
 export const TeamSection: React.FC = () => {
     return (
-        <section className="w-full px-4 max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="w-full px-4 max-w-[1200px] mx-auto py-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {TEAM.map((member) => (
-                    <div key={member.id} className="group relative rounded-xl overflow-hidden shadow-lg bg-white">
+                    <div key={member.id} className="flex flex-col items-center">
 
-                        {/* Контейнер картинки с фиксированной высотой */}
-                        <div className="h-[350px] w-full overflow-hidden">
-                            <img
-                                src={member.image}
-                                alt={member.name}
-                                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                                onError={(e) => (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x500?text=Manager'}
-                            />
+                        {/* Карточка (серый фон, закругленные углы) */}
+                        <div className="bg-[#C4C4C4] rounded-2xl p-6 w-full flex flex-col items-center shadow-lg transition-transform hover:scale-[1.02]">
+                            {/* Картинка */}
+                            <div className="w-full aspect-[3/4] overflow-hidden rounded-xl mb-4 bg-gray-300">
+                                <img
+                                    src={member.image}
+                                    alt={member.name}
+                                    className="w-full h-full object-cover object-top"
+                                    onError={(e) => (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x500?text=Photo'}
+                                />
+                            </div>
+
+                            {/* Имя и Должность */}
+                            <h3 className="text-3xl font-medium text-black mb-1">{member.name}</h3>
+                            <p className="text-sm text-gray-700 font-light">{member.role}</p>
                         </div>
 
-                        {/* Блок с именем (внизу, поверх картинки или под ней) */}
-                        <div className="p-4 text-center bg-white border-t border-gray-100">
-                            <h3 className="text-xl font-bold text-black mb-1">{member.name}</h3>
-                            <p className="text-sm text-gray-500 uppercase tracking-wide">{member.role}</p>
-                        </div>
+                        {/* Кнопка с телефоном (Вынесена из карточки, как на макете) */}
+                        <a
+                            href={`tel:${member.phone.replace(/\s/g, '')}`}
+                            className="mt-4 bg-[#C84A4A] text-white py-2 px-8 rounded-full font-medium text-lg hover:bg-[#B03E3E] transition-colors shadow-md"
+                        >
+                            {member.phone}
+                        </a>
+
                     </div>
                 ))}
             </div>
