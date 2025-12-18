@@ -13,7 +13,7 @@ import { Login } from './pages/Login';
 import { Contacts } from './pages/Contacts';
 import { Register } from './pages/Register';
 import { Admin } from './pages/Admin';
-import { ScrollToTop } from './components/utils/ScrollToTop'; // Импорт
+import { ScrollToTop } from './components/utils/ScrollToTop';
 
 function App() {
     const dispatch = useAppDispatch();

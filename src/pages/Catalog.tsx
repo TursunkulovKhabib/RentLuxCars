@@ -21,13 +21,16 @@ export const Catalog: React.FC = () => {
         }
     }, [status, dispatch]);
 
-    const filteredCars = filter === 'all'
-        ? list
-        : list.filter(car => car.category === filter);
+    const filteredCars = list.filter(car => {
+        if (car.is_available !== true) return false;
+
+        if (filter === 'all') return true;
+        return car.category === filter;
+    });
 
     return (
         <div className="min-h-screen bg-background pb-20">
-            {/* Заголовок категории (синий, как на макете) */}
+            {/* Заголовок категории */}
             <div className="pt-8 pb-4 text-center">
                 <h1 className="text-4xl md:text-6xl font-bold text-[#4A90E2] uppercase tracking-wide">
                     {filter === 'all' ? 'Our Fleet' : filter}
@@ -54,33 +57,41 @@ export const Catalog: React.FC = () => {
             <div className="max-w-[1400px] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {status === 'loading' && <p className="text-center col-span-full">Загрузка авто...</p>}
 
-                {status === 'succeeded' && filteredCars.map((car) => (
-                    <Link to={`/catalog/${car.id}`} key={car.id} className="block group">
-                        <div className="bg-[#D9D9D9] rounded-lg overflow-hidden relative aspect-[4/3] mb-2">
-                            <img
-                                src={car.image_url}
-                                alt={`${car.brand} ${car.model}`}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                onError={(e) => (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Car'}
-                            />
-                            {/* Бейджик (опционально) */}
-                            <div className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded">
-                                Available
+                {status === 'succeeded' && filteredCars.length > 0 ? (
+                    filteredCars.map((car) => (
+                        <Link to={`/catalog/${car.id}`} key={car.id} className="block group">
+                            <div className="bg-[#D9D9D9] rounded-lg overflow-hidden relative aspect-[4/3] mb-2">
+                                <img
+                                    src={car.image_url}
+                                    alt={`${car.brand} ${car.model}`}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    onError={(e) => (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Car'}
+                                />
+                                {/* Бейджик */}
+                                <div className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded">
+                                    Available
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Инфо о машине */}
-                        <div className="bg-[#1E1E1E] text-white p-4 rounded-b-lg flex justify-between items-end">
-                            <div>
-                                <h3 className="text-xl font-medium leading-none">{car.brand}</h3>
-                                <p className="text-xs text-gray-400 mt-1">{car.model}</p>
+                            {/* Инфо о машине */}
+                            <div className="bg-[#1E1E1E] text-white p-4 rounded-b-lg flex justify-between items-end">
+                                <div>
+                                    <h3 className="text-xl font-medium leading-none">{car.brand}</h3>
+                                    <p className="text-xs text-gray-400 mt-1">{car.model}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-lg font-bold">{car.price_per_day.toLocaleString()} ₽</p>
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <p className="text-lg font-bold">{car.price_per_day.toLocaleString()} ₽</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+                        </Link>
+                    ))
+                ) : (
+                    status === 'succeeded' && (
+                        <p className="text-center col-span-full text-gray-500 py-10">
+                            В данной категории пока нет доступных автомобилей.
+                        </p>
+                    )
+                )}
             </div>
         </div>
     );
