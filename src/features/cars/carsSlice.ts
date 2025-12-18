@@ -1,48 +1,61 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { fetchCars } from '../../api/carsApi';
-import { Car } from '../../types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { supabase } from '../../lib/supabase';
 
-// Асинхронный экшен для загрузки машин
-export const getCars = createAsyncThunk('cars/getCars', async () => {
-  const response = await fetchCars();
-  return response;
-});
+export const getCars = createAsyncThunk(
+    'cars/getCars',
+    async (_, { rejectWithValue }) => {
+      try {
+        console.log('Redux: Начинаем загрузку авто из Supabase...');
 
-interface CarsState {
-  list: Car[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-  filter: 'all' | 'sport' | 'executive' | 'family'; // Фильтр по категориям
-}
+        const { data, error } = await supabase
+            .from('cars')
+            .select('*');
 
-const initialState: CarsState = {
-  list: [],
-  status: 'idle',
-  error: null,
-  filter: 'all',
-};
+        console.log('Supabase Response:', { data, error });
+
+        if (error) {
+          console.error('Ошибка Supabase:', error);
+          throw error;
+        }
+
+        console.log('Загружено машин:', data?.length || 0);
+        return data || [];
+      } catch (error: any) {
+        console.error(' Catch ошибка:', error);
+        return rejectWithValue(error.message);
+      }
+    }
+);
 
 const carsSlice = createSlice({
   name: 'cars',
-  initialState,
+  initialState: {
+    list: [] as any[],
+    status: 'idle' as 'idle' | 'loading' | 'succeeded' | 'failed',
+    filter: 'all' as 'all' | 'sport' | 'executive' | 'family',
+    error: null as string | null,
+  },
   reducers: {
-    setFilter(state, action: PayloadAction<CarsState['filter']>) {
+    setFilter: (state, action) => {
       state.filter = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getCars.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(getCars.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.list = action.payload;
-      })
-      .addCase(getCars.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message || 'Failed to fetch cars';
-      });
+        .addCase(getCars.pending, (state) => {
+          console.log('⏳ Redux: status → loading');
+          state.status = 'loading';
+        })
+        .addCase(getCars.fulfilled, (state, action) => {
+          console.log('🎉 Redux: status → succeeded, машин:', action.payload.length);
+          state.status = 'succeeded';
+          state.list = action.payload;
+        })
+        .addCase(getCars.rejected, (state, action) => {
+          console.error('💔 Redux: status → failed', action.payload);
+          state.status = 'failed';
+          state.error = action.payload as string;
+        });
   },
 });
 
